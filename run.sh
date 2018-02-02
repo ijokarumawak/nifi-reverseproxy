@@ -1,13 +1,16 @@
 #/bin/bash
 
 dirName=`dirname ${PWD}`
-t=`basename ${dirName}`
+# n: nginx, haproxy ... etc
+n=`basename ${dirName}`
+# t: standalone-plain ... etc
+t=`basename ${PWD}`
 
 case $t in
   standalone-plain)
     p=8080
     ;;
-  standalone-secure)
+  standalone-secure|standalone-secure-tcp)
     p=8443
     ;;
   cluster-plain)
@@ -18,4 +21,4 @@ case $t in
     ;;
 esac
 
-docker run -d --name nifi-reverseproxy_${t} -p ${p}:${p} nifi-reverseproxy:${t}
+docker run -d --name ${n}_${t} -p ${p}:${p} ${n}:${t}
