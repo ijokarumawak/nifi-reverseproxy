@@ -14,13 +14,16 @@ case $t in
     p="-p 8080:8080 -p 8081:8081"
     ;;
   standalone-secure-http)
-    p=8443
+    p="-p 8443:8443"
     ;;
-  cluster-plain)
-    p=18080
+  standalone-secure-raw)
+    p="-p 8443:8443 -p 8481:8481"
+    ;;
+  cluster-plain-raw)
+    p="-p 18080:18080 -p 18081:18081 -p 18091:18091"
     ;;
   cluster-secure)
-    p=18443
+    p="-p 18443:18443"
     ;;
 esac
 

@@ -44,5 +44,13 @@
         <policy identifier="287edf48-da72-359b-8f61-da5d4c45a270" resource="/proxy" action="W">
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
         </policy>
+        <policy identifier="55a55d31-0161-1000-a3a4-d5038d38aa7c" resource="/site-to-site" action="R">
+            <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+            <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
+        </policy>
+        <policy identifier="55a91efc-0161-1000-715d-e53052d826cd" resource="/data-transfer/input-ports/5598788f-0161-1000-9480-e6abbd10289a" action="W">
+            <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+            <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
+        </policy>
     </policies>
 </authorizations>

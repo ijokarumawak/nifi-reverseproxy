@@ -8,11 +8,11 @@ import org.apache.nifi.remote.protocol.SiteToSiteTransportProtocol;
 import java.io.IOException;
 import java.util.Collections;
 
-public class StandalonePlain {
+public class ClusterPlain {
 
     public static void main(String[] args) throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("http://nginx.example.com:8080/nifi")
+                .url("http://nginx.example.com:18080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
                 .build();
