@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 dirName=`dirname ${PWD}`
 # n: nginx, haproxy ... etc

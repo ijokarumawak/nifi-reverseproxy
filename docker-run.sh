@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 dirName=`dirname ${PWD}`
 # n: nginx, haproxy ... etc
@@ -7,10 +7,13 @@ n=`basename ${dirName}`
 t=`basename ${PWD}`
 
 case $t in
-  standalone-plain)
-    p=8080
+  standalone-plain-http)
+    p="-p 8080:8080"
     ;;
-  standalone-secure|standalone-secure-tcp)
+  standalone-plain-raw)
+    p="-p 8080:8080 -p 8081:8081"
+    ;;
+  standalone-secure-http)
     p=8443
     ;;
   cluster-plain)
@@ -21,4 +24,4 @@ case $t in
     ;;
 esac
 
-docker run -d --name ${n}_${t} -p ${p}:${p} ${n}:${t}
+docker run -d --name ${n}_${t} ${p} ${n}:${t}
