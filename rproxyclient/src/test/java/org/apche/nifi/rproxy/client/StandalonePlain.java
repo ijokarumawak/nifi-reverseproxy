@@ -4,15 +4,17 @@ import org.apache.nifi.remote.Transaction;
 import org.apache.nifi.remote.TransferDirection;
 import org.apache.nifi.remote.client.SiteToSiteClient;
 import org.apache.nifi.remote.protocol.SiteToSiteTransportProtocol;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collections;
 
-public class ClusterPlain {
+public class StandalonePlain {
 
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void testSendRAWWithProxy() throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("http://nginx.example.com:18080/nifi")
+                .url("http://nginx.example.com:8080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
                 .build();

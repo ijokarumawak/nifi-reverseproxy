@@ -22,8 +22,8 @@ case $t in
   cluster-plain-raw)
     p="-p 18080:18080 -p 18081:18081 -p 18091:18091"
     ;;
-  cluster-secure)
-    p="-p 18443:18443"
+  cluster-secure-raw)
+    p="-p 18443:18443 -p 18481:18481 -p 18491:18491"
     ;;
 esac
 
