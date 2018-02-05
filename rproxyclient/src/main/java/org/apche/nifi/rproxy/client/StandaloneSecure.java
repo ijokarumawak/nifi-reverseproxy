@@ -13,14 +13,6 @@ public class StandaloneSecure {
 
     public static void main(String[] args) throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                // TODO: Sending directly works but not with the proxy.
-                /*
-
-2018-02-02 17:57:20,102 ERROR [Site-to-Site Worker Thread-7] o.a.nifi.remote.SocketRemoteSiteListener Unable to communicate with remote instance null due to org.apache.nifi.remote.exception.HandshakeException: Handshake with nifi://nginx.example.com:52666 failed because the Magic Header was not present; closing connection
-2018-02-02 17:57:20,102 ERROR [Site-to-Site Worker Thread-8] o.a.nifi.remote.SocketRemoteSiteListener Unable to communicate with remote instance null due to org.apache.nifi.remote.exception.HandshakeException: Handshake with nifi://nginx.example.com:52668 failed because the Magic Header was not present; closing connection
-
-                 */
-//                .url("https://localhost:8443/nifi")
                 .url("https://nginx.example.com:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
