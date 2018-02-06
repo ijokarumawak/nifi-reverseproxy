@@ -47,7 +47,11 @@
             <user identifier="639b0d62-0161-1000-0000-000009f16873"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
         </policy>
-        <policy identifier="639ca2af-0161-1000-0000-000017f6414d" resource="/data-transfer/input-ports/55430efa-0161-1000-ffff-ffffc120b5bd" action="W">
+        <policy identifier="6524d7c6-0161-1000-0000-000047b6fc78" resource="/data-transfer/input-ports/0187b38f-73bc-33f6-be24-5178aa39ff91" action="W">
+            <user identifier="639b0d62-0161-1000-0000-000009f16873"/>
+            <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+        </policy>
+        <policy identifier="652529bd-0161-1000-0000-0000338cd29e" resource="/data-transfer/input-ports/b5e9583b-d44c-35a9-9aee-d3882e679ec7" action="W">
             <user identifier="639b0d62-0161-1000-0000-000009f16873"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
         </policy>

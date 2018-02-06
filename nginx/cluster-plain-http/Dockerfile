@@ -1,3 +1,3 @@
 FROM nginx:alpine
-EXPOSE 18080
+EXPOSE 18060 18070 18071
 COPY nginx.conf /etc/nginx/nginx.conf

@@ -48,12 +48,16 @@
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
             <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
-        <policy identifier="55a91efc-0161-1000-715d-e53052d826cd" resource="/data-transfer/input-ports/5598788f-0161-1000-9480-e6abbd10289a" action="W">
+        <policy identifier="63769f40-0161-1000-fd2d-be6da2f2d463" resource="/provenance" action="R">
+            <user identifier="47c717db-75da-3d54-8ab3-1731497291c7"/>
+        </policy>
+        <policy identifier="64a5a5c7-0161-1000-9b9a-344547046400" resource="/data-transfer/input-ports/0187b38f-73bc-33f6-302b-3a01b0ce97e7" action="W">
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
             <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
-        <policy identifier="63769f40-0161-1000-fd2d-be6da2f2d463" resource="/provenance" action="R">
-            <user identifier="47c717db-75da-3d54-8ab3-1731497291c7"/>
+        <policy identifier="64a5f955-0161-1000-5f0b-aea3c499696b" resource="/data-transfer/input-ports/b5e9583b-d44c-35a9-70ea-34c7e182256a" action="W">
+            <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+            <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
     </policies>
 </authorizations>
