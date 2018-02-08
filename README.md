@@ -14,6 +14,11 @@ Includes following resources:
     - localhost has a network interface whose IP is 192.168.99.1 which can be accessed by the docker host and containers
 - proxyclient: A java project to test S2S against different NiFi environment with or without a Reverse Proxy in the middle
 
+## NiFi updates
+
+This branch has improvements on NiFi side.
+https://github.com/ijokarumawak/nifi/tree/s2s-reverse-proxy
+
 ## PORTS
 
 In order to run different setup at the same time, following ports are used to avoid conflicts.
