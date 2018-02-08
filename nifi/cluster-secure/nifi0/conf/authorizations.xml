@@ -55,5 +55,8 @@
             <user identifier="639b0d62-0161-1000-0000-000009f16873"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
         </policy>
+        <policy identifier="76eb9790-0161-1000-ffff-fffff29a9bc1" resource="/provenance" action="R">
+            <user identifier="47c717db-75da-3d54-8ab3-1731497291c7"/>
+        </policy>
     </policies>
 </authorizations>

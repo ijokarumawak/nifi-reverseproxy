@@ -28,6 +28,9 @@ case $t in
   cluster-secure-http)
     p="-p 18460:18460 -p 18470:18470 -p 18471:18471"
     ;;
+  cluster-secure-http-binary)
+    p="-p 18461:18461 -p 18475:18475 -p 18476:18476"
+    ;;
   cluster-secure-raw)
     p="-p 18443:18443 -p 18481:18481 -p 18491:18491"
     ;;

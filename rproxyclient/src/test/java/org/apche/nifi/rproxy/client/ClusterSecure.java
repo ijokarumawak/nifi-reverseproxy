@@ -107,12 +107,37 @@ public class ClusterSecure extends AbstractS2SClientTest {
 
         final String inputUuid = UUID.randomUUID().toString();
         final Transaction transaction = client.createTransaction(TransferDirection.SEND);
-        transaction.send("testSendHttpDirect".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+        transaction.send("testSendHttpProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
         transaction.confirm();
         transaction.complete();
 
         final GenericJson json = getJson("http://localhost:8023?input.uuid=" + inputUuid);
-        assertEquals("testSendHttpDirect", json.get("content.0"));
+        assertEquals("testSendHttpProxy", json.get("content.0"));
+        assertEquals("nginx.example.com", json.get("s2s.host"));
+    }
+
+    @Test
+    public void testSendHttpProxyBinary() throws IOException {
+        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+                .url("https://nginx.example.com:18461/nifi")
+                .transportProtocol(SiteToSiteTransportProtocol.HTTP)
+                .portName("input-http")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .keystorePass("password")
+                .keystoreType(KeystoreType.JKS)
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststorePass("password")
+                .truststoreType(KeystoreType.JKS)
+                .build();
+
+        final String inputUuid = UUID.randomUUID().toString();
+        final Transaction transaction = client.createTransaction(TransferDirection.SEND);
+        transaction.send("testSendHttpProxyBinary".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+        transaction.confirm();
+        transaction.complete();
+
+        final GenericJson json = getJson("http://localhost:8023?input.uuid=" + inputUuid);
+        assertEquals("testSendHttpProxyBinary", json.get("content.0"));
         assertEquals("nginx.example.com", json.get("s2s.host"));
     }
 
