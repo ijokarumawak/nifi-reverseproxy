@@ -6,18 +6,20 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 public class AbstractS2SClientTest {
     private final ApacheHttpTransport httpTransport = new ApacheHttpTransport.Builder().build();
-    private final JsonFactory jsonFactory = new JacksonFactory();
+    protected final JsonFactory jsonFactory = new JacksonFactory();
 
     protected GenericJson getJson(String url) throws IOException {
         final HttpRequestFactory requestFactory = httpTransport.createRequestFactory(request -> {
@@ -37,6 +39,15 @@ public class AbstractS2SClientTest {
 
         final GenericJson json = httpResponse.parseAs(GenericJson.class);
         return json;
+    }
+
+    protected void postData(Map<String, String> payload) throws IOException {
+        final HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
+        final HttpRequest httpRequest = requestFactory.buildPostRequest(
+                new GenericUrl("http://localhost:8031/contentListener"), new JsonHttpContent(jsonFactory, payload));
+        final HttpResponse httpResponse = httpRequest.execute();
+
+        assertEquals(200, httpResponse.getStatusCode());
     }
 
 }

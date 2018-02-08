@@ -3,6 +3,7 @@
     <policies>
         <policy identifier="f99bccd1-a30e-3e4a-98a2-dbc708edc67f" resource="/flow" action="R">
             <user identifier="47c717db-75da-3d54-8ab3-1731497291c7"/>
+            <user identifier="734c7bed-0161-1000-1267-5b86f89e7f31"/>
             <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
         <policy identifier="5861e6d6-f683-3bf6-9a14-c99211653ed8" resource="/data/process-groups/4ff065e0-0161-1000-779a-d6daf7501854" action="R">

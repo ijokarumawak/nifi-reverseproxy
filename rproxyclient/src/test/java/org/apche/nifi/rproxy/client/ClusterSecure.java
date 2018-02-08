@@ -113,7 +113,7 @@ public class ClusterSecure extends AbstractS2SClientTest {
 
         final GenericJson json = getJson("http://localhost:8023?input.uuid=" + inputUuid);
         assertEquals("testSendHttpDirect", json.get("content.0"));
-        assertEquals("localhost", json.get("s2s.host"));
+        assertEquals("nginx.example.com", json.get("s2s.host"));
     }
 
 }

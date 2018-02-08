@@ -11,3 +11,4 @@ PORTS
 |Embed Zookeeper server|N/A|N/A|2888:3888|2889:3889|
 |CacheServer|8010|8011|8012|8013|
 |HandleHttpRequest|8020|8021|8022|8023|
+|ListenHttp|8030|8031|8032,8033|8034,8035|
