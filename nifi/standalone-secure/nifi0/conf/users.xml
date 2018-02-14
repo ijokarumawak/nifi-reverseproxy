@@ -2,8 +2,9 @@
 <tenants>
     <groups/>
     <users>
-        <user identifier="47c717db-75da-3d54-8ab3-1731497291c7" identity="CN=admin, OU=NIFI"/>
-        <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234" identity="CN=localhost, OU=NIFI"/>
+        <user identifier="47c717db-75da-3d54-8ab3-1731497291c7" identity="admin@NIFI"/>
+        <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234" identity="localhost@NIFI"/>
         <user identifier="541aab80-0161-1000-b417-46ef8bbd8888" identity="nginx.example.com@Rumawaks"/>
+        <user identifier="8e97cbd5-0161-1000-091c-687abab761fa" identity="s2s-client@NIFI"/>
     </users>
 </tenants>

@@ -28,10 +28,10 @@ public class StandaloneSecure extends AbstractS2SClientTest {
                 .url("https://localhost:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
@@ -53,10 +53,10 @@ public class StandaloneSecure extends AbstractS2SClientTest {
                 .url("https://nginx.example.com:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
@@ -77,11 +77,11 @@ public class StandaloneSecure extends AbstractS2SClientTest {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://localhost:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
-                .portName("input-raw")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .portName("input-http")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
@@ -94,7 +94,7 @@ public class StandaloneSecure extends AbstractS2SClientTest {
 
         final GenericJson json = getJson("http://localhost:8021?input.uuid=" + inputUuid);
         assertEquals("testSendHttpDirect", json.get("content.0"));
-        assertEquals("192.168.99.1", json.get("s2s.host"));
+        assertEquals("192.168.2.104", json.get("s2s.host"));
     }
 
     @Test
@@ -102,11 +102,11 @@ public class StandaloneSecure extends AbstractS2SClientTest {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://nginx.example.com:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
-                .portName("input-raw")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .portName("input-http")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
@@ -137,10 +137,10 @@ public class StandaloneSecure extends AbstractS2SClientTest {
                 .url("https://localhost:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("output-raw")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
@@ -173,10 +173,10 @@ public class StandaloneSecure extends AbstractS2SClientTest {
                 .url("https://localhost:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("output-http")
-                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/keystore.jks")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
                 .keystorePass("password")
                 .keystoreType(KeystoreType.JKS)
-                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/localhost/truststore.jks")
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .build();
