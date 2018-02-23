@@ -11,13 +11,14 @@ import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class AbstractS2SClientTest {
+public abstract class AbstractS2SClientTest {
     private final ApacheHttpTransport httpTransport = new ApacheHttpTransport.Builder().build();
     protected final JsonFactory jsonFactory = new JacksonFactory();
 
@@ -50,4 +51,10 @@ public class AbstractS2SClientTest {
         assertEquals(200, httpResponse.getStatusCode());
     }
 
+    @Test
+    public abstract void testSendDirect() throws IOException;
+    @Test
+    public abstract void testSendProxy() throws IOException;
+
+    // TODO: add receive direct and proxy.
 }

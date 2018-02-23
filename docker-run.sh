@@ -8,19 +8,19 @@ t=`basename ${PWD}`
 
 case $t in
   standalone-plain-http)
-    p="-p 8080:8080"
+    p="-p 7080:7080"
     ;;
   standalone-plain-raw)
-    p="-p 8080:8080 -p 8081:8081"
+    p="-p 7080:7080 -p 7081:7081"
     ;;
   standalone-secure-http)
-    p="-p 8443:8443"
+    p="-p 7443:7443"
     ;;
   standalone-secure-raw)
-    p="-p 8443:8443 -p 8481:8481"
+    p="-p 7443:7443 -p 7481:7481"
     ;;
   cluster-plain-http)
-    p="-p 18060:18060 -p 18070:18070 -p 18071:18071"
+    p="-p 17060:17060 -p 17070:17070 -p 17071:17071"
     ;;
   cluster-plain-raw)
     p="-p 18080:18080 -p 18081:18081 -p 18091:18091"
@@ -36,4 +36,4 @@ case $t in
     ;;
 esac
 
-docker run -d --name ${n}_${t} ${p} ${n}:${t}
+docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 ${n}:${t}
