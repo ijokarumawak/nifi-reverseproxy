@@ -20,10 +20,10 @@ case $t in
     p="-p 7444:7444 -p 7481:7481"
     ;;
   cluster-plain-http)
-    p="-p 17060:17060 -p 17070:17070 -p 17071:17071"
+    p="-p 17080:17080 -p 17081:17081 -p 17082:17082"
     ;;
   cluster-plain-raw)
-    p="-p 18080:18080 -p 18081:18081 -p 18091:18091"
+    p="-p 17090:17090 -p 17091:17091 -p 17092:17092"
     ;;
   cluster-secure-http)
     p="-p 18460:18460 -p 18470:18470 -p 18471:18471"
@@ -36,4 +36,4 @@ case $t in
     ;;
 esac
 
-docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 ${n}:${t}
+docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 --add-host nifi1:192.168.99.1 ${n}:${t}

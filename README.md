@@ -25,11 +25,11 @@ In order to run different setup at the same time, following ports are used to av
 
 |Name|host|sp|ss|cp|cs|
 |----|----|--|--|--|--|
-|Nginx|Docker Host|7070,7080,7081|7443,7444,7481|17080,17060,18070,18071|18443,18460,18470,18471|
+|Nginx|Docker Host|7070,7080,7081|7443,7444,7481|17080,17081,17082, 17090,17091,17092|18443,18460,18470,18471|
 |nifi debug|localhost|8000|8001|8002,8003|8004,8005|
-|nifi.web.http.port|localhost|8080|8443|18080,18090|18443,18444|
-|nifi.remote.input.socket.port|localhost|8081|8481|18081,18091|18481,18491|
-|nifi.cluster.node.protocol.port|localhost|N/A|N/A|18082,18092|18482,18492|
+|nifi.web.http.port|localhost|8080|8443|18080,18081|18443,18444|
+|nifi.remote.input.socket.port|localhost|8081|8481|18091,18092|18481,18491|
+|nifi.cluster.node.protocol.port|localhost|N/A|N/A|18071,18072|18482,18492|
 |Embed Zookeeper client port|localhost|N/A|N/A|2181|2182|
 |Embed Zookeeper server|localhost|N/A|N/A|2888:3888|2889:3889|
 |CacheServer|localhost|8010|8011|8012|8013|

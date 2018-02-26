@@ -42,7 +42,7 @@ public class StandaloneSecure extends AbstractS2SClientTest {
 
         final GenericJson json = getJson("http://nifi0:8021?input.uuid=" + inputUuid);
         assertEquals("testSendRawDirect", json.get("content.0"));
-        assertEquals("nifi0", json.get("s2s.host"));
+        assertEquals("s2sclient", json.get("s2s.host"));
     }
 
     @Test
