@@ -23,7 +23,7 @@ public class StandaloneSecure extends AbstractS2SClientTest {
     @Test
     public void testSendDirect() throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("https://localhost:8443/nifi")
+                .url("https://nifi0:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
                 .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
@@ -40,15 +40,15 @@ public class StandaloneSecure extends AbstractS2SClientTest {
         transaction.confirm();
         transaction.complete();
 
-        final GenericJson json = getJson("http://localhost:8021?input.uuid=" + inputUuid);
+        final GenericJson json = getJson("http://nifi0:8021?input.uuid=" + inputUuid);
         assertEquals("testSendRawDirect", json.get("content.0"));
-        assertEquals("192.168.99.1", json.get("s2s.host"));
+        assertEquals("nifi0", json.get("s2s.host"));
     }
 
     @Test
     public void testSendProxy() throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("https://nginx.example.com:8443/nifi")
+                .url("https://nginx.example.com:7444/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
                 .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
@@ -71,7 +71,7 @@ public class StandaloneSecure extends AbstractS2SClientTest {
     }
 
     @Test
-    public void testReceiveRawDirect() throws IOException {
+    public void testReceiveDirect() throws IOException {
 
         final String inputUuid = UUID.randomUUID().toString();
         final Map<String, String> payload = new HashMap<>();
@@ -79,10 +79,10 @@ public class StandaloneSecure extends AbstractS2SClientTest {
         payload.put("s2s.protocol", "RAW");
         payload.put("test", "testReceiveRawDirect");
 
-        postData(payload);
+        postData(8031, payload);
 
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("https://localhost:8443/nifi")
+                .url("https://nifi0:8443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("output-raw")
                 .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
@@ -94,8 +94,45 @@ public class StandaloneSecure extends AbstractS2SClientTest {
                 .build();
 
         final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
-        assertEquals("HW13076.local", transaction.getCommunicant().getHost());
+        assertEquals("nifi0", transaction.getCommunicant().getHost());
         assertEquals(8481, transaction.getCommunicant().getPort());
+
+        for (DataPacket packet; (packet = transaction.receive()) != null;) {
+            final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
+            assertEquals(payload, received);
+        }
+
+        transaction.confirm();
+        transaction.complete();
+    }
+
+    @Test
+    @Override
+    public void testReceiveProxy() throws IOException {
+
+        final String inputUuid = UUID.randomUUID().toString();
+        final Map<String, String> payload = new HashMap<>();
+        payload.put("input.uuid", inputUuid);
+        payload.put("s2s.protocol", "RAW");
+        payload.put("test", "testReceiveRawProxy");
+
+        postData(8031, payload);
+
+        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+                .url("https://nginx.example.com:7443/nifi")
+                .transportProtocol(SiteToSiteTransportProtocol.RAW)
+                .portName("output-raw")
+                .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
+                .keystorePass("password")
+                .keystoreType(KeystoreType.JKS)
+                .truststoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/truststore.jks")
+                .truststorePass("password")
+                .truststoreType(KeystoreType.JKS)
+                .build();
+
+        final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
+        assertEquals("nginx.example.com", transaction.getCommunicant().getHost());
+        assertEquals(7481, transaction.getCommunicant().getPort());
 
         for (DataPacket packet; (packet = transaction.receive()) != null;) {
             final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);

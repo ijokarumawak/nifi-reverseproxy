@@ -54,6 +54,7 @@
             <user identifier="47c717db-75da-3d54-8ab3-1731497291c7"/>
         </policy>
         <policy identifier="64a5a5c7-0161-1000-9b9a-344547046400" resource="/data-transfer/input-ports/0187b38f-73bc-33f6-302b-3a01b0ce97e7" action="W">
+            <user identifier="8e97cbd5-0161-1000-091c-687abab761fa"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
             <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
@@ -63,13 +64,14 @@
             <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
         <policy identifier="6eb6ac55-0161-1000-4a5c-3a5c9b119575" resource="/data-transfer/output-ports/6ea9573c-0161-1000-b7cd-bb0ab19cbd06" action="W">
+            <user identifier="8e97cbd5-0161-1000-091c-687abab761fa"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+            <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
         <policy identifier="01611000-ac55-1eb6-2eac-a8b3c5d41095" resource="/data-transfer/output-ports/01611000-573c-1ea9-e05b-4c4cf9539b86" action="W">
+            <user identifier="8e97cbd5-0161-1000-091c-687abab761fa"/>
             <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
-        </policy>
-        <policy identifier="8cf30a39-0161-1000-5853-b42a0a84310e" resource="/data-transfer/input-ports/8cf0b697-0161-1000-1bee-006fedd65c35" action="W">
-            <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234"/>
+            <user identifier="541aab80-0161-1000-b417-46ef8bbd8888"/>
         </policy>
     </policies>
 </authorizations>

@@ -25,7 +25,7 @@ In order to run different setup at the same time, following ports are used to av
 
 |Name|host|sp|ss|cp|cs|
 |----|----|--|--|--|--|
-|Nginx|Docker Host|7080,7081|7443,7481|17080,17060,18070,18071|18443,18460,18470,18471|
+|Nginx|Docker Host|7070,7080,7081|7443,7444,7481|17080,17060,18070,18071|18443,18460,18470,18471|
 |nifi debug|localhost|8000|8001|8002,8003|8004,8005|
 |nifi.web.http.port|localhost|8080|8443|18080,18090|18443,18444|
 |nifi.remote.input.socket.port|localhost|8081|8481|18081,18091|18481,18491|

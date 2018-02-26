@@ -42,10 +42,11 @@ public abstract class AbstractS2SClientTest {
         return json;
     }
 
-    protected void postData(Map<String, String> payload) throws IOException {
+    protected void postData(int listenHttpPort, Map<String, String> payload) throws IOException {
         final HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
         final HttpRequest httpRequest = requestFactory.buildPostRequest(
-                new GenericUrl("http://localhost:8031/contentListener"), new JsonHttpContent(jsonFactory, payload));
+                new GenericUrl("http://nifi0:" + listenHttpPort + "/contentListener"),
+                new JsonHttpContent(jsonFactory, payload));
         final HttpResponse httpResponse = httpRequest.execute();
 
         assertEquals(200, httpResponse.getStatusCode());
@@ -56,5 +57,8 @@ public abstract class AbstractS2SClientTest {
     @Test
     public abstract void testSendProxy() throws IOException;
 
-    // TODO: add receive direct and proxy.
+    @Test
+    public abstract void testReceiveDirect() throws IOException;
+    @Test
+    public abstract void testReceiveProxy() throws IOException;
 }

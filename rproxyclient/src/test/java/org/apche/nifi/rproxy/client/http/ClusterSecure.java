@@ -92,4 +92,13 @@ public class ClusterSecure extends AbstractS2SClientTest {
         assertEquals("nginx.example.com", json.get("s2s.host"));
     }
 
+    @Override
+    public void testReceiveDirect() throws IOException {
+
+    }
+
+    @Override
+    public void testReceiveProxy() throws IOException {
+
+    }
 }

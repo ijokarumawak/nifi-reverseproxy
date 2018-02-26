@@ -8,7 +8,7 @@ t=`basename ${PWD}`
 
 case $t in
   standalone-plain-http)
-    p="-p 7080:7080"
+    p="-p 7070:7070"
     ;;
   standalone-plain-raw)
     p="-p 7080:7080 -p 7081:7081"
@@ -17,7 +17,7 @@ case $t in
     p="-p 7443:7443"
     ;;
   standalone-secure-raw)
-    p="-p 7443:7443 -p 7481:7481"
+    p="-p 7444:7444 -p 7481:7481"
     ;;
   cluster-plain-http)
     p="-p 17060:17060 -p 17070:17070 -p 17071:17071"
