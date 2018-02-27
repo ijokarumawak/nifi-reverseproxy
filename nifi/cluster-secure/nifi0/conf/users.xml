@@ -3,7 +3,9 @@
     <groups/>
     <users>
         <user identifier="47c717db-75da-3d54-8ab3-1731497291c7" identity="CN=admin, OU=NIFI"/>
-        <user identifier="c22273fa-7ed3-38a9-8994-3ed5fea5d234" identity="CN=localhost, OU=NIFI"/>
-        <user identifier="639b0d62-0161-1000-0000-000009f16873" identity="nginx.example.com@Rumawaks"/>
+        <user identifier="eb90f17e-b3a8-332f-9efa-2477c5de6301" identity="CN=nifi0, OU=NIFI"/>
+        <user identifier="9a22ed58-a36d-36e7-b457-dbe9cc39f5e8" identity="CN=nifi1, OU=NIFI"/>
+        <user identifier="d28a061a-0161-1000-0000-00006d8df80c" identity="CN=s2s-client, OU=NIFI"/>
+        <user identifier="d4e62e1d-0161-1000-0000-000041856350" identity="nginx.example.com@Rumawaks"/>
     </users>
 </tenants>

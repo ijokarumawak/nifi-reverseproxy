@@ -1,5 +1,5 @@
 FROM nginx:alpine
-EXPOSE 18443 18481 18491
+EXPOSE 17490 17491 17492
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.key /etc/nginx/
 COPY nginx.crt /etc/nginx/

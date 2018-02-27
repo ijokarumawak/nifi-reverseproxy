@@ -50,7 +50,8 @@
         <property name="Legacy Authorized Users File"></property>
 
         <property name="Initial User Identity 1">CN=admin, OU=NIFI</property>
-        <property name="Initial User Identity 2">CN=localhost, OU=NIFI</property>
+        <property name="Initial User Identity 2">CN=nifi0, OU=NIFI</property>
+        <property name="Initial User Identity 3">CN=nifi1, OU=NIFI</property>
     </userGroupProvider>
 
     <!--
@@ -248,7 +249,8 @@
         <property name="Initial Admin Identity">CN=admin, OU=NIFI</property>
         <property name="Legacy Authorized Users File"></property>
 
-        <property name="Node Identity 1">CN=localhost, OU=NIFI</property>
+        <property name="Node Identity 1">CN=nifi0, OU=NIFI</property>
+        <property name="Node Identity 2">CN=nifi1, OU=NIFI</property>
     </accessPolicyProvider>
 
     <!--
