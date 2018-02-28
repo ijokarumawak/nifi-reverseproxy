@@ -43,9 +43,13 @@ public abstract class AbstractS2SClientTest {
     }
 
     protected void postData(int listenHttpPort, Map<String, String> payload) throws IOException {
+        postData("nifi0:" + listenHttpPort, payload);
+    }
+
+    protected void postData(String targetAddress, Map<String, String> payload) throws IOException {
         final HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
         final HttpRequest httpRequest = requestFactory.buildPostRequest(
-                new GenericUrl("http://nifi0:" + listenHttpPort + "/contentListener"),
+                new GenericUrl("http://" + targetAddress + "/contentListener"),
                 new JsonHttpContent(jsonFactory, payload));
         final HttpResponse httpResponse = httpRequest.execute();
 
