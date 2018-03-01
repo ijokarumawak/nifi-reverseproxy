@@ -22,6 +22,9 @@ case $t in
   cluster-plain-http)
     p="-p 17080:17080 -p 17081:17081 -p 17082:17082"
     ;;
+  cluster-plain-http-h)
+    p="-p 17180:17180"
+    ;;
   cluster-plain-raw)
     p="-p 17090:17090 -p 17091:17091 -p 17092:17092"
     ;;
@@ -36,4 +39,11 @@ case $t in
     ;;
 esac
 
-docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 --add-host nifi1:192.168.99.1 ${n}:${t}
+docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 --add-host nifi1:192.168.99.1 --cap-add=NET_ADMIN ${n}:${t}
+
+
+case $t in
+  cluster-plain-http-h)
+    docker exec ${n}_${t} dnsmasq
+    ;;
+esac
