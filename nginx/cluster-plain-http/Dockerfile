@@ -1,3 +1,4 @@
 FROM nginx:alpine
-EXPOSE 17080 17081 17082
+RUN apk --no-cache add dnsmasq
+EXPOSE 17080
 COPY nginx.conf /etc/nginx/nginx.conf

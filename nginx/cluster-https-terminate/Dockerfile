@@ -1,5 +1,6 @@
 FROM nginx:alpine
-EXPOSE 17453 17454 17455
+RUN apk --no-cache add dnsmasq
+EXPOSE 17453
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.key /etc/nginx/
 COPY nginx.crt /etc/nginx/

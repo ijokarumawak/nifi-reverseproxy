@@ -26,10 +26,8 @@ In order to run different setup at the same time, following ports are used to av
 |Name|host|sp|ss|cp|cs|
 |----|----|--|--|--|--|
 |Nginx RAW|Docker Host|7080,7081|7444,7481|17090,17091,17092|17490,17491,17492|
-|Nginx HTTP|Docker Host|7070|7443|17080,17081,17082|17443,17444,17445|
-|Nginx HTTP H|Docker Host|7170|7543|17180|17543|
-|Nginx HTTPS Terminate|Docker Host|-|-|17453,17454,17455|-|
-|Nginx HTTPS Terminate H|Docker Host|-|-|17553|-|
+|Nginx HTTP|Docker Host|7070|7443|17080|17443|
+|Nginx HTTPS Terminate|Docker Host|-|-|17453|-|
 |nifi debug|localhost|8000|8001|8002,8003|8004,8005|
 |nifi.web.http.port|localhost|8080|8443|18080,18081|18443,18444|
 |nifi.remote.input.socket.port|localhost|8081|8481|18091,18092|18491,18492|

@@ -20,25 +20,16 @@ case $t in
     p="-p 7444:7444 -p 7481:7481"
     ;;
   cluster-plain-http)
-    p="-p 17080:17080 -p 17081:17081 -p 17082:17082"
-    ;;
-  cluster-plain-http-h)
-    p="-p 17180:17180"
+    p="-p 17080:17080"
     ;;
   cluster-plain-raw)
-    p="-p 17090:17090 -p 17091:17091 -p 17092:17092"
+    p="-p 17090-17092:17090-17092"
     ;;
   cluster-secure-http)
-    p="-p 17443-17445:17443-17445"
-    ;;
-  cluster-secure-http-h)
-    p="-p 17543:17543"
+    p="-p 17443:17443"
     ;;
   cluster-https-terminate)
-    p="-p 17453-17455:17453-17455"
-    ;;
-  cluster-https-terminate-h)
-    p="-p 17553:17553"
+    p="-p 17453:17453"
     ;;
   cluster-secure-raw)
     p="-p 17490-17492:17490-17492"
@@ -49,7 +40,7 @@ docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 --add-host nif
 
 
 case $t in
-  cluster-plain-http-h | cluster-secure-http-h | cluster-https-terminate-h)
+  cluster-plain-http | cluster-secure-http | cluster-https-terminate)
     docker exec ${n}_${t} dnsmasq
     ;;
 esac
