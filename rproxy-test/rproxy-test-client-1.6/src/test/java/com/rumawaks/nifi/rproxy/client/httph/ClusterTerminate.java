@@ -35,7 +35,7 @@ public class ClusterTerminate extends AbstractS2SClientTest {
     @Override
     public void testSendProxy() throws IOException {
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("https://nginx.example.com:17453/nifi")
+                .url("https://nginx.example.com:17553/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("input-http")
                 .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
@@ -52,6 +52,8 @@ public class ClusterTerminate extends AbstractS2SClientTest {
             final String inputUuid = UUID.randomUUID().toString();
             final Transaction transaction = client.createTransaction(TransferDirection.SEND);
             final Communicant peer = transaction.getCommunicant();
+            // URL is proxy's. But peer host and port are node's.
+            assertEquals("https://nginx.example.com:17553/nifi-api", peer.getUrl());
             distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
                     k -> new AtomicInteger()).getAndIncrement();
             transaction.send("testSendHTTPProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
@@ -63,8 +65,8 @@ public class ClusterTerminate extends AbstractS2SClientTest {
             assertEquals("nginx.example.com", json.get("s2s.host"));
         }
 
-        assertTrue(distCount.get("nginx.example.com:17454").get() > 0);
-        assertTrue(distCount.get("nginx.example.com:17455").get() > 0);
+        assertTrue(distCount.get("nifi0:18080").get() > 0);
+        assertTrue(distCount.get("nifi1:18081").get() > 0);
     }
 
     @Ignore
@@ -86,7 +88,7 @@ public class ClusterTerminate extends AbstractS2SClientTest {
         postData(8033, payload);
 
         final SiteToSiteClient client = new SiteToSiteClient.Builder()
-                .url("https://nginx.example.com:17453/nifi")
+                .url("https://nginx.example.com:17553/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("output-http")
                 .keystoreFilename("/Users/koji/dev/nifi-reverseproxy/nifi/s2s-client/keystore.jks")
@@ -103,6 +105,8 @@ public class ClusterTerminate extends AbstractS2SClientTest {
             final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
 
             final Communicant peer = transaction.getCommunicant();
+            // URL is proxy's. But peer host and port are node's.
+            assertEquals("https://nginx.example.com:17553/nifi-api", peer.getUrl());
             distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
                     k -> new AtomicInteger()).getAndIncrement();
 
@@ -115,7 +119,7 @@ public class ClusterTerminate extends AbstractS2SClientTest {
             transaction.complete();
         }
 
-        assertTrue(distCount.get("nginx.example.com:17454").get() > 0);
-        assertTrue(distCount.get("nginx.example.com:17455").get() > 0);
+        assertTrue(distCount.get("nifi0:18080").get() > 0);
+        assertTrue(distCount.get("nifi1:18081").get() > 0);
     }
 }
