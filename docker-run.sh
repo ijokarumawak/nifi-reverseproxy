@@ -31,6 +31,9 @@ case $t in
   cluster-secure-http)
     p="-p 17443-17445:17443-17445"
     ;;
+  cluster-secure-http-h)
+    p="-p 17543:17543"
+    ;;
   cluster-https-terminate)
     p="-p 17453-17455:17453-17455"
     ;;
@@ -43,7 +46,7 @@ docker run -d --name ${n}_${t} ${p} --add-host nifi0:192.168.99.1 --add-host nif
 
 
 case $t in
-  cluster-plain-http-h)
+  cluster-plain-http-h | cluster-secure-http-h)
     docker exec ${n}_${t} dnsmasq
     ;;
 esac
