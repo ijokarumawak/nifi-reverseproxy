@@ -26,7 +26,7 @@ public class ClusterSecure extends AbstractS2SClientTest {
 
     @Test
     public void testSendDirect() throws IOException {
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://nifi0:18443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("input-http")
@@ -37,31 +37,32 @@ public class ClusterSecure extends AbstractS2SClientTest {
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .requestBatchCount(1)
-                .build();
+                .build()) {
 
-        final Map<String, AtomicInteger> distCount = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
-            final String inputUuid = UUID.randomUUID().toString();
-            final Transaction transaction = client.createTransaction(TransferDirection.SEND);
-            final Communicant peer = transaction.getCommunicant();
-            distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
-                    k -> new AtomicInteger()).getAndIncrement();
-            transaction.send("testSendHTTPDirect".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
-            transaction.confirm();
-            transaction.complete();
+            final Map<String, AtomicInteger> distCount = new HashMap<>();
+            for (int i = 0; i < 10; i++) {
+                final String inputUuid = UUID.randomUUID().toString();
+                final Transaction transaction = client.createTransaction(TransferDirection.SEND);
+                final Communicant peer = transaction.getCommunicant();
+                distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
+                        k -> new AtomicInteger()).getAndIncrement();
+                transaction.send("testSendHTTPDirect".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+                transaction.confirm();
+                transaction.complete();
 
-            final GenericJson json = getJson("http://nifi0:8023?input.uuid=" + inputUuid);
-            assertEquals("testSendHTTPDirect", json.get("content.0"));
-            assertEquals("s2sclient", json.get("s2s.host"));
+                final GenericJson json = getJson("http://nifi0:8023?input.uuid=" + inputUuid);
+                assertEquals("testSendHTTPDirect", json.get("content.0"));
+                assertEquals("s2sclient", json.get("s2s.host"));
+            }
+
+            assertTrue(distCount.get("nifi0:18443").get() > 0);
+            assertTrue(distCount.get("nifi1:18444").get() > 0);
         }
-
-        assertTrue(distCount.get("nifi0:18443").get() > 0);
-        assertTrue(distCount.get("nifi1:18444").get() > 0);
     }
 
     @Test
     public void testSendProxy() throws IOException {
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://nginx.example.com:17443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("input-http")
@@ -72,26 +73,27 @@ public class ClusterSecure extends AbstractS2SClientTest {
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .requestBatchCount(1)
-                .build();
+                .build()) {
 
-        final Map<String, AtomicInteger> distCount = new HashMap<>();
-        for (int i = 0; i < 6; i++) {
-            final String inputUuid = UUID.randomUUID().toString();
-            final Transaction transaction = client.createTransaction(TransferDirection.SEND);
-            final Communicant peer = transaction.getCommunicant();
-            distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
-                    k -> new AtomicInteger()).getAndIncrement();
-            transaction.send("testSendHTTPProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
-            transaction.confirm();
-            transaction.complete();
+            final Map<String, AtomicInteger> distCount = new HashMap<>();
+            for (int i = 0; i < 6; i++) {
+                final String inputUuid = UUID.randomUUID().toString();
+                final Transaction transaction = client.createTransaction(TransferDirection.SEND);
+                final Communicant peer = transaction.getCommunicant();
+                distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
+                        k -> new AtomicInteger()).getAndIncrement();
+                transaction.send("testSendHTTPProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+                transaction.confirm();
+                transaction.complete();
 
-            final GenericJson json = getJson("http://nifi0:8023?input.uuid=" + inputUuid);
-            assertEquals("testSendHTTPProxy", json.get("content.0"));
-            assertEquals("nginx.example.com", json.get("s2s.host"));
+                final GenericJson json = getJson("http://nifi0:8023?input.uuid=" + inputUuid);
+                assertEquals("testSendHTTPProxy", json.get("content.0"));
+                assertEquals("nginx.example.com", json.get("s2s.host"));
+            }
+
+            assertTrue(distCount.get("nifi0.example.com:17443").get() > 0);
+            assertTrue(distCount.get("nifi1.example.com:17443").get() > 0);
         }
-
-        assertTrue(distCount.get("nifi0.example.com:17443").get() > 0);
-        assertTrue(distCount.get("nifi1.example.com:17443").get() > 0);
     }
 
     @Test
@@ -106,7 +108,7 @@ public class ClusterSecure extends AbstractS2SClientTest {
         postData(8034, payload);
         postData(8035, payload);
 
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://nifi0:18443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("output-http")
@@ -117,27 +119,28 @@ public class ClusterSecure extends AbstractS2SClientTest {
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .requestBatchCount(1)
-                .build();
+                .build()) {
 
-        final Map<String, AtomicInteger> distCount = new HashMap<>();
-        for (int i = 0; i < 4; i++) {
-            final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
+            final Map<String, AtomicInteger> distCount = new HashMap<>();
+            for (int i = 0; i < 4; i++) {
+                final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
 
-            final Communicant peer = transaction.getCommunicant();
-            distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
-                    k -> new AtomicInteger()).getAndIncrement();
+                final Communicant peer = transaction.getCommunicant();
+                distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
+                        k -> new AtomicInteger()).getAndIncrement();
 
-            for (DataPacket packet; (packet = transaction.receive()) != null; ) {
-                final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
-                assertEquals(payload, received);
+                for (DataPacket packet; (packet = transaction.receive()) != null; ) {
+                    final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
+                    assertEquals(payload, received);
+                }
+
+                transaction.confirm();
+                transaction.complete();
             }
 
-            transaction.confirm();
-            transaction.complete();
+            assertTrue(distCount.get("nifi0:18443").get() > 0);
+            assertTrue(distCount.get("nifi1:18444").get() > 0);
         }
-
-        assertTrue(distCount.get("nifi0:18443").get() > 0);
-        assertTrue(distCount.get("nifi1:18444").get() > 0);
     }
 
     @Test
@@ -152,7 +155,7 @@ public class ClusterSecure extends AbstractS2SClientTest {
         postData(8034, payload);
         postData(8035, payload);
 
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("https://nginx.example.com:17443/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.HTTP)
                 .portName("output-http")
@@ -163,26 +166,28 @@ public class ClusterSecure extends AbstractS2SClientTest {
                 .truststorePass("password")
                 .truststoreType(KeystoreType.JKS)
                 .requestBatchCount(1)
-                .build();
+                .build()) {
 
-        final Map<String, AtomicInteger> distCount = new HashMap<>();
-        for (int i = 0; i < 4; i++) {
-            final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
+            final Map<String, AtomicInteger> distCount = new HashMap<>();
+            for (int i = 0; i < 4; i++) {
+                final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
 
-            final Communicant peer = transaction.getCommunicant();
-            distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
-                    k -> new AtomicInteger()).getAndIncrement();
+                final Communicant peer = transaction.getCommunicant();
+                distCount.computeIfAbsent(format("%s:%d", peer.getHost(), peer.getPort()),
+                        k -> new AtomicInteger()).getAndIncrement();
 
-            for (DataPacket packet; (packet = transaction.receive()) != null; ) {
-                final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
-                assertEquals(payload, received);
+                for (DataPacket packet; (packet = transaction.receive()) != null; ) {
+                    final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
+                    assertEquals(payload, received);
+                }
+
+                transaction.confirm();
+                transaction.complete();
             }
 
-            transaction.confirm();
-            transaction.complete();
+            assertTrue(distCount.get("nifi0.example.com:17443").get() > 0);
+            assertTrue(distCount.get("nifi1.example.com:17443").get() > 0);
         }
 
-        assertTrue(distCount.get("nifi0.example.com:17443").get() > 0);
-        assertTrue(distCount.get("nifi1.example.com:17443").get() > 0);
     }
 }

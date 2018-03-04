@@ -21,40 +21,42 @@ public class StandalonePlain extends AbstractS2SClientTest {
 
     @Test
     public void testSendDirect() throws IOException {
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("http://nifi0:8080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
-                .build();
+                .build()) {
 
-        final String inputUuid = UUID.randomUUID().toString();
-        final Transaction transaction = client.createTransaction(TransferDirection.SEND);
-        transaction.send("testSendRawDirect".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
-        transaction.confirm();
-        transaction.complete();
+            final String inputUuid = UUID.randomUUID().toString();
+            final Transaction transaction = client.createTransaction(TransferDirection.SEND);
+            transaction.send("testSendRawDirect".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+            transaction.confirm();
+            transaction.complete();
 
-        final GenericJson json = getJson("http://nifi0:8020?input.uuid=" + inputUuid);
-        assertEquals("testSendRawDirect", json.get("content.0"));
-        assertEquals("s2sclient", json.get("s2s.host"));
+            final GenericJson json = getJson("http://nifi0:8020?input.uuid=" + inputUuid);
+            assertEquals("testSendRawDirect", json.get("content.0"));
+            assertEquals("s2sclient", json.get("s2s.host"));
+        }
     }
 
     @Test
     public void testSendProxy() throws IOException {
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("http://nginx.example.com:7080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("input-raw")
-                .build();
+                .build()) {
 
-        final String inputUuid = UUID.randomUUID().toString();
-        final Transaction transaction = client.createTransaction(TransferDirection.SEND);
-        transaction.send("testSendRawProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
-        transaction.confirm();
-        transaction.complete();
+            final String inputUuid = UUID.randomUUID().toString();
+            final Transaction transaction = client.createTransaction(TransferDirection.SEND);
+            transaction.send("testSendRawProxy".getBytes(), Collections.singletonMap("input.uuid", inputUuid));
+            transaction.confirm();
+            transaction.complete();
 
-        final GenericJson json = getJson("http://nifi0:8020?input.uuid=" + inputUuid);
-        assertEquals("testSendRawProxy", json.get("content.0"));
-        assertEquals("nginx.example.com", json.get("s2s.host"));
+            final GenericJson json = getJson("http://nifi0:8020?input.uuid=" + inputUuid);
+            assertEquals("testSendRawProxy", json.get("content.0"));
+            assertEquals("nginx.example.com", json.get("s2s.host"));
+        }
     }
 
     @Test
@@ -68,23 +70,25 @@ public class StandalonePlain extends AbstractS2SClientTest {
 
         postData(8030, payload);
 
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("http://nifi0:8080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("output-raw")
-                .build();
+                .build()) {
 
-        final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
-        assertEquals("nifi0", transaction.getCommunicant().getHost());
-        assertEquals(8081, transaction.getCommunicant().getPort());
+            final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
+            assertEquals("nifi0", transaction.getCommunicant().getHost());
+            assertEquals(8081, transaction.getCommunicant().getPort());
 
-        for (DataPacket packet; (packet = transaction.receive()) != null;) {
-            final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
-            assertEquals(payload, received);
+            for (DataPacket packet; (packet = transaction.receive()) != null;) {
+                final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
+                assertEquals(payload, received);
+            }
+
+            transaction.confirm();
+            transaction.complete();
         }
 
-        transaction.confirm();
-        transaction.complete();
     }
 
     @Test
@@ -98,23 +102,24 @@ public class StandalonePlain extends AbstractS2SClientTest {
 
         postData(8030, payload);
 
-        final SiteToSiteClient client = new SiteToSiteClient.Builder()
+        try (final SiteToSiteClient client = new SiteToSiteClient.Builder()
                 .url("http://nginx.example.com:7080/nifi")
                 .transportProtocol(SiteToSiteTransportProtocol.RAW)
                 .portName("output-raw")
-                .build();
+                .build()) {
 
-        final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
-        assertEquals("nginx.example.com", transaction.getCommunicant().getHost());
-        assertEquals(7081, transaction.getCommunicant().getPort());
+            final Transaction transaction = client.createTransaction(TransferDirection.RECEIVE);
+            assertEquals("nginx.example.com", transaction.getCommunicant().getHost());
+            assertEquals(7081, transaction.getCommunicant().getPort());
 
-        for (DataPacket packet; (packet = transaction.receive()) != null;) {
-            final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
-            assertEquals(payload, received);
+            for (DataPacket packet; (packet = transaction.receive()) != null;) {
+                final Map received = jsonFactory.createJsonParser(packet.getData()).parse(Map.class);
+                assertEquals(payload, received);
+            }
+
+            transaction.confirm();
+            transaction.complete();
         }
-
-        transaction.confirm();
-        transaction.complete();
     }
 
 }
