@@ -26,6 +26,7 @@ In order to run different setup at the same time, following ports are used to av
 |Name|host|sp|ss|cp|cs|
 |----|----|--|--|--|--|
 |Nginx RAW|Docker Host|7080,7081|7444,7481|17090,17091,17092|17490,17491,17492|
+|Nginx RAW Server name|Docker Host|-|-|17190,17191|17590,17591|
 |Nginx HTTP|Docker Host|7070|7443|17080|17443|
 |Nginx HTTPS Terminate|Docker Host|-|-|17453|-|
 |nifi debug|localhost|8000|8001|8002,8003|8004,8005|
