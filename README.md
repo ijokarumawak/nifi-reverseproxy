@@ -17,7 +17,7 @@ Includes following resources:
 ## NiFi updates
 
 This branch has improvements on NiFi side.
-https://github.com/ijokarumawak/nifi/tree/s2s-reverse-proxy
+https://github.com/ijokarumawak/nifi/tree/nifi-4932
 
 ## PORTS
 
