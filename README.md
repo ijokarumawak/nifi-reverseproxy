@@ -19,6 +19,8 @@ Includes following resources:
 This branch has improvements on NiFi side.
 https://github.com/ijokarumawak/nifi/tree/nifi-4932
 
+UPDATE: NIFI-4932 has been merged and available since NiFi 1.7.0.
+
 ## PORTS
 
 In order to run different setup at the same time, following ports are used to avoid conflicts.
@@ -38,3 +40,29 @@ In order to run different setup at the same time, following ports are used to av
 |CacheServer|localhost|8010|8011|8012|8013|
 |HandleHttpRequest|localhost|8020|8021|8022|8023|
 |ListenHttp|localhost|8030|8031|8032,8033|8034,8035|
+
+## How to use
+
+### NiFi
+
+- Go to one of the NiFi environment dirs: `$ cd nifi/cluster-secure/nifi0`
+- Create symlinks to an installed NiFi resources. This project only provides predefined conf dirs, you need to install NiFi in different directory.
+    - `$ ln -s <your-nifi-home>/lib`
+    - `$ ln -s <your-nifi-home>/docs`
+    - `$ cp -rp <your-nifi-home>/bin`
+- Then, start NiFi: `$ bin/nifi.sh start`
+
+### Nginx
+
+You need to build a Nginx docker image you want to use:
+
+- Go to one of the Nginx docker dirs: `$ cd nginx/cluster-secure-http`
+- Build a docker image, the script uses current location to resolve name: `../../docker-build.sh`
+
+Then, run a Nginx docker container:
+
+```
+$ ../../docker-run.sh
+```
+
+
